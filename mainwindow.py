@@ -10,6 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from sudoku import *
 
 class Ui_MainWindow(object):
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(744, 476)
@@ -2694,7 +2695,7 @@ class Ui_MainWindow(object):
         self.label_87.setText(_translate("MainWindow", "0"))
         self.label_88.setText(_translate("MainWindow", "SOLUTION"))
 
-
+    
     def initialize(self):
         # Initializes the matrix with values of the combobox
         arr = [[0 for i in range(maxBlock)] for j in range(maxBlock)]
@@ -2788,6 +2789,11 @@ class Ui_MainWindow(object):
         arr[8][6] = int(self.comboBox_46.currentText())
         arr[8][7] = int(self.comboBox_51.currentText())
         arr[8][8] = int(self.comboBox_47.currentText())
+
+        for i in range(9):
+            for j in range(9):
+                print(arr[i][j], ends=' ')
+            print()
 
 if __name__ == "__main__":
     import sys
