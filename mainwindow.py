@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from sudoku import *
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -2695,9 +2695,99 @@ class Ui_MainWindow(object):
         self.label_88.setText(_translate("MainWindow", "SOLUTION"))
 
 
-def initialize():
-	# Initializes the matrix with values of the combobox
-	pass
+    def initialize(self):
+        # Initializes the matrix with values of the combobox
+        arr = [[0 for i in range(maxBlock)] for j in range(maxBlock)]
+        
+        arr[0][0] = int(self.comboBox_63.currentText())
+        arr[0][1] = int(self.comboBox_61.currentText())
+        arr[0][2] = int(self.comboBox_62.currentText())
+        arr[0][3] = int(self.comboBox_66.currentText())
+        arr[0][4] = int(self.comboBox_72.currentText())
+        arr[0][5] = int(self.comboBox_71.currentText())
+        arr[0][6] = int(self.comboBox_80.currentText())
+        arr[0][7] = int(self.comboBox_81.currentText())
+        arr[0][8] = int(self.comboBox_79.currentText())
+        
+        arr[1][0] = int(self.comboBox_59.currentText())
+        arr[1][1] = int(self.comboBox_57.currentText())
+        arr[1][2] = int(self.comboBox_58.currentText())
+        arr[1][3] = int(self.comboBox_69.currentText())
+        arr[1][4] = int(self.comboBox_67.currentText())
+        arr[1][5] = int(self.comboBox_68.currentText())
+        arr[1][6] = int(self.comboBox_77.currentText())
+        arr[1][7] = int(self.comboBox_75.currentText())
+        arr[1][8] = int(self.comboBox_76.currentText())
+        
+        arr[2][0] = int(self.comboBox_55.currentText())
+        arr[2][1] = int(self.comboBox_60.currentText())
+        arr[2][2] = int(self.comboBox_56.currentText())
+        arr[2][3] = int(self.comboBox_64.currentText())
+        arr[2][4] = int(self.comboBox_70.currentText())
+        arr[2][5] = int(self.comboBox_65.currentText())
+        arr[2][6] = int(self.comboBox_73.currentText())
+        arr[2][7] = int(self.comboBox_78.currentText())
+        arr[2][8] = int(self.comboBox_74.currentText())
+
+        arr[3][0] = int(self.comboBox_90.currentText())
+        arr[3][1] = int(self.comboBox_88.currentText())
+        arr[3][2] = int(self.comboBox_89.currentText())
+        arr[3][3] = int(self.comboBox_93.currentText())
+        arr[3][4] = int(self.comboBox_99.currentText())
+        arr[3][5] = int(self.comboBox_98.currentText())
+        arr[3][6] = int(self.comboBox_107.currentText())
+        arr[3][7] = int(self.comboBox_108.currentText())
+        arr[3][8] = int(self.comboBox_106.currentText())
+
+        arr[4][0] = int(self.comboBox_86.currentText())
+        arr[4][1] = int(self.comboBox_84.currentText())
+        arr[4][2] = int(self.comboBox_85.currentText())
+        arr[4][3] = int(self.comboBox_96.currentText())
+        arr[4][4] = int(self.comboBox_94.currentText())
+        arr[4][5] = int(self.comboBox_95.currentText())
+        arr[4][6] = int(self.comboBox_104.currentText())
+        arr[4][7] = int(self.comboBox_102.currentText())
+        arr[4][8] = int(self.comboBox_103.currentText())
+
+        arr[5][0] = int(self.comboBox_82.currentText())
+        arr[5][1] = int(self.comboBox_87.currentText())
+        arr[5][2] = int(self.comboBox_83.currentText())
+        arr[5][3] = int(self.comboBox_91.currentText())
+        arr[5][4] = int(self.comboBox_97.currentText())
+        arr[5][5] = int(self.comboBox_92.currentText())
+        arr[5][6] = int(self.comboBox_100.currentText())
+        arr[5][7] = int(self.comboBox_105.currentText())
+        arr[5][8] = int(self.comboBox_101.currentText())
+
+        arr[6][0] = int(self.comboBox_36.currentText())
+        arr[6][1] = int(self.comboBox_34.currentText())
+        arr[6][2] = int(self.comboBox_35.currentText())
+        arr[6][3] = int(self.comboBox_39.currentText())
+        arr[6][4] = int(self.comboBox_45.currentText())
+        arr[6][5] = int(self.comboBox_44.currentText())
+        arr[6][6] = int(self.comboBox_53.currentText())
+        arr[6][7] = int(self.comboBox_54.currentText())
+        arr[6][8] = int(self.comboBox_52.currentText())
+
+        arr[7][0] = int(self.comboBox_32.currentText())
+        arr[7][1] = int(self.comboBox_30.currentText())
+        arr[7][2] = int(self.comboBox_31.currentText())
+        arr[7][3] = int(self.comboBox_42.currentText())
+        arr[7][4] = int(self.comboBox_40.currentText())
+        arr[7][5] = int(self.comboBox_41.currentText())
+        arr[7][6] = int(self.comboBox_50.currentText())
+        arr[7][7] = int(self.comboBox_48.currentText())
+        arr[7][8] = int(self.comboBox_49.currentText())
+
+        arr[8][0] = int(self.comboBox_28.currentText())
+        arr[8][1] = int(self.comboBox_33.currentText())
+        arr[8][2] = int(self.comboBox_29.currentText())
+        arr[8][3] = int(self.comboBox_37.currentText())
+        arr[8][4] = int(self.comboBox_43.currentText())
+        arr[8][5] = int(self.comboBox_38.currentText())
+        arr[8][6] = int(self.comboBox_46.currentText())
+        arr[8][7] = int(self.comboBox_51.currentText())
+        arr[8][8] = int(self.comboBox_47.currentText())
 
 if __name__ == "__main__":
     import sys
