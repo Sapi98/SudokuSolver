@@ -7,9 +7,10 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from sudoku import maxBlock, place, findUnassigned, isFeasible, isInputFeasible
 
 class Ui_MainWindow(object):
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(744, 476)
@@ -1216,9 +1217,10 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.comboBox_54, 0, 1, 1, 1)
         self.horizontalLayout_2.addLayout(self.gridLayout_6)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
-        self.toolButton = QtWidgets.QToolButton(self.centralWidget)
-        self.toolButton.setGeometry(QtCore.QRect(180, 330, 51, 31))
-        self.toolButton.setObjectName("toolButton")
+        self.pushButton = QtWidgets.QPushButton(self.centralWidget)
+        self.pushButton.setGeometry(QtCore.QRect(170, 350, 80, 31))
+        self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton.setObjectName("pushButton")
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.centralWidget)
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(420, 50, 311, 231))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
@@ -1777,6 +1779,19 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.label_88.setFont(font)
         self.label_88.setObjectName("label_88")
+        self.label_35 = QtWidgets.QLabel(self.centralWidget)
+        self.label_35.setEnabled(False)
+        self.label_35.setGeometry(QtCore.QRect(450, 330, 251, 31))
+        font = QtGui.QFont()
+        font.setFamily("Tlwg Typewriter")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_35.setFont(font)
+        self.label_35.setScaledContents(True)
+        self.label_35.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_35.setWordWrap(True)
+        self.label_35.setObjectName("label_35")
         self.line = QtWidgets.QFrame(self.centralWidget)
         self.line.setGeometry(QtCore.QRect(390, -10, 41, 401))
         self.line.setFrameShape(QtWidgets.QFrame.VLine)
@@ -2610,7 +2625,7 @@ class Ui_MainWindow(object):
         self.comboBox_54.setItemText(7, _translate("MainWindow", "7"))
         self.comboBox_54.setItemText(8, _translate("MainWindow", "8"))
         self.comboBox_54.setItemText(9, _translate("MainWindow", "9"))
-        self.toolButton.setText(_translate("MainWindow", "Solve"))
+        self.pushButton.setText(_translate("MainWindow", "Solve"))
         self.label_2.setText(_translate("MainWindow", "0"))
         self.label.setText(_translate("MainWindow", "0"))
         self.label_3.setText(_translate("MainWindow", "0"))
@@ -2693,15 +2708,241 @@ class Ui_MainWindow(object):
         self.label_86.setText(_translate("MainWindow", "0"))
         self.label_87.setText(_translate("MainWindow", "0"))
         self.label_88.setText(_translate("MainWindow", "SOLUTION"))
+        self.label_35.setText(_translate("MainWindow", "NO SOLUTION EXISTS AS THE INPUT VIOLATES THE RULES OF 9X9 SUDOKU"))
 
+        self.label_35.setHidden(True)
+        self.label_35.setDisabled(True)
+        self.pushButton.clicked.connect(self.controler)
+    
+    def initialize(self, printFlag=False):
+        # Initializes the matrix with values of the combobox
+        arr = [[0 for i in range(maxBlock)] for j in range(maxBlock)]
+        
+        arr[0][0] = int(self.comboBox_63.currentText())
+        arr[0][1] = int(self.comboBox_61.currentText())
+        arr[0][2] = int(self.comboBox_62.currentText())
+        arr[0][3] = int(self.comboBox_66.currentText())
+        arr[0][4] = int(self.comboBox_72.currentText())
+        arr[0][5] = int(self.comboBox_71.currentText())
+        arr[0][6] = int(self.comboBox_80.currentText())
+        arr[0][7] = int(self.comboBox_81.currentText())
+        arr[0][8] = int(self.comboBox_79.currentText())
+        
+        arr[1][0] = int(self.comboBox_59.currentText())
+        arr[1][1] = int(self.comboBox_57.currentText())
+        arr[1][2] = int(self.comboBox_58.currentText())
+        arr[1][3] = int(self.comboBox_69.currentText())
+        arr[1][4] = int(self.comboBox_67.currentText())
+        arr[1][5] = int(self.comboBox_68.currentText())
+        arr[1][6] = int(self.comboBox_77.currentText())
+        arr[1][7] = int(self.comboBox_75.currentText())
+        arr[1][8] = int(self.comboBox_76.currentText())
+        
+        arr[2][0] = int(self.comboBox_55.currentText())
+        arr[2][1] = int(self.comboBox_60.currentText())
+        arr[2][2] = int(self.comboBox_56.currentText())
+        arr[2][3] = int(self.comboBox_64.currentText())
+        arr[2][4] = int(self.comboBox_70.currentText())
+        arr[2][5] = int(self.comboBox_65.currentText())
+        arr[2][6] = int(self.comboBox_73.currentText())
+        arr[2][7] = int(self.comboBox_78.currentText())
+        arr[2][8] = int(self.comboBox_74.currentText())
 
-def initialize():
-	# Initializes the matrix with values of the combobox
-	pass
+        arr[3][0] = int(self.comboBox_90.currentText())
+        arr[3][1] = int(self.comboBox_88.currentText())
+        arr[3][2] = int(self.comboBox_89.currentText())
+        arr[3][3] = int(self.comboBox_93.currentText())
+        arr[3][4] = int(self.comboBox_99.currentText())
+        arr[3][5] = int(self.comboBox_98.currentText())
+        arr[3][6] = int(self.comboBox_107.currentText())
+        arr[3][7] = int(self.comboBox_108.currentText())
+        arr[3][8] = int(self.comboBox_106.currentText())
+
+        arr[4][0] = int(self.comboBox_86.currentText())
+        arr[4][1] = int(self.comboBox_84.currentText())
+        arr[4][2] = int(self.comboBox_85.currentText())
+        arr[4][3] = int(self.comboBox_96.currentText())
+        arr[4][4] = int(self.comboBox_94.currentText())
+        arr[4][5] = int(self.comboBox_95.currentText())
+        arr[4][6] = int(self.comboBox_104.currentText())
+        arr[4][7] = int(self.comboBox_102.currentText())
+        arr[4][8] = int(self.comboBox_103.currentText())
+
+        arr[5][0] = int(self.comboBox_82.currentText())
+        arr[5][1] = int(self.comboBox_87.currentText())
+        arr[5][2] = int(self.comboBox_83.currentText())
+        arr[5][3] = int(self.comboBox_91.currentText())
+        arr[5][4] = int(self.comboBox_97.currentText())
+        arr[5][5] = int(self.comboBox_92.currentText())
+        arr[5][6] = int(self.comboBox_100.currentText())
+        arr[5][7] = int(self.comboBox_105.currentText())
+        arr[5][8] = int(self.comboBox_101.currentText())
+
+        arr[6][0] = int(self.comboBox_36.currentText())
+        arr[6][1] = int(self.comboBox_34.currentText())
+        arr[6][2] = int(self.comboBox_35.currentText())
+        arr[6][3] = int(self.comboBox_39.currentText())
+        arr[6][4] = int(self.comboBox_45.currentText())
+        arr[6][5] = int(self.comboBox_44.currentText())
+        arr[6][6] = int(self.comboBox_53.currentText())
+        arr[6][7] = int(self.comboBox_54.currentText())
+        arr[6][8] = int(self.comboBox_52.currentText())
+
+        arr[7][0] = int(self.comboBox_32.currentText())
+        arr[7][1] = int(self.comboBox_30.currentText())
+        arr[7][2] = int(self.comboBox_31.currentText())
+        arr[7][3] = int(self.comboBox_42.currentText())
+        arr[7][4] = int(self.comboBox_40.currentText())
+        arr[7][5] = int(self.comboBox_41.currentText())
+        arr[7][6] = int(self.comboBox_50.currentText())
+        arr[7][7] = int(self.comboBox_48.currentText())
+        arr[7][8] = int(self.comboBox_49.currentText())
+
+        arr[8][0] = int(self.comboBox_28.currentText())
+        arr[8][1] = int(self.comboBox_33.currentText())
+        arr[8][2] = int(self.comboBox_29.currentText())
+        arr[8][3] = int(self.comboBox_37.currentText())
+        arr[8][4] = int(self.comboBox_43.currentText())
+        arr[8][5] = int(self.comboBox_38.currentText())
+        arr[8][6] = int(self.comboBox_46.currentText())
+        arr[8][7] = int(self.comboBox_51.currentText())
+        arr[8][8] = int(self.comboBox_47.currentText())
+
+        if printFlag:
+            for i in range(9):
+                for j in range(9):
+                    print(arr[i][j], end=' ')
+                print()
+        
+        return arr
+
+    def showOutput(self, arr, printFlag=False):
+        self.label.setText(str(arr[0][0]))
+        self.label_2.setText(str(arr[0][1]))
+        self.label_3.setText(str(arr[0][2]))
+        self.label_4.setText(str(arr[1][0]))
+        self.label_5.setText(str(arr[1][1]))
+        self.label_6.setText(str(arr[1][2]))
+        self.label_7.setText(str(arr[2][0]))
+        self.label_8.setText(str(arr[2][1]))
+        self.label_9.setText(str(arr[2][2]))
+
+        self.label_10.setText(str(arr[0][3]))
+        self.label_11.setText(str(arr[0][4]))
+        self.label_12.setText(str(arr[0][5]))
+        self.label_13.setText(str(arr[1][3]))
+        self.label_14.setText(str(arr[1][4]))
+        self.label_15.setText(str(arr[1][5]))
+        self.label_16.setText(str(arr[2][3]))
+        self.label_17.setText(str(arr[2][4]))
+        self.label_18.setText(str(arr[2][5]))
+
+        self.label_19.setText(str(arr[0][6]))
+        self.label_20.setText(str(arr[0][7]))
+        self.label_21.setText(str(arr[0][8]))
+        self.label_22.setText(str(arr[1][6]))
+        self.label_23.setText(str(arr[1][7]))
+        self.label_24.setText(str(arr[1][8]))
+        self.label_25.setText(str(arr[2][6]))
+        self.label_26.setText(str(arr[2][7]))
+        self.label_27.setText(str(arr[2][8]))
+
+        self.label_28.setText(str(arr[3][0]))
+        self.label_29.setText(str(arr[3][1]))
+        self.label_30.setText(str(arr[3][2]))
+        self.label_31.setText(str(arr[4][0]))
+        self.label_32.setText(str(arr[4][1]))
+        self.label_33.setText(str(arr[4][2]))
+        self.label_34.setText(str(arr[5][0]))
+        self.label_41.setText(str(arr[5][1]))
+        self.label_42.setText(str(arr[5][2]))
+
+        self.label_43.setText(str(arr[3][3]))
+        self.label_44.setText(str(arr[3][4]))
+        self.label_45.setText(str(arr[3][5]))
+        self.label_46.setText(str(arr[4][3]))
+        self.label_47.setText(str(arr[4][4]))
+        self.label_48.setText(str(arr[4][5]))
+        self.label_49.setText(str(arr[5][3]))
+        self.label_50.setText(str(arr[5][4]))
+        self.label_51.setText(str(arr[5][5]))
+
+        self.label_52.setText(str(arr[3][6]))
+        self.label_53.setText(str(arr[3][7]))
+        self.label_54.setText(str(arr[3][8]))
+        self.label_55.setText(str(arr[4][6]))
+        self.label_56.setText(str(arr[4][7]))
+        self.label_57.setText(str(arr[4][8]))
+        self.label_58.setText(str(arr[5][6]))
+        self.label_59.setText(str(arr[5][7]))
+        self.label_60.setText(str(arr[5][8]))
+
+        self.label_61.setText(str(arr[6][0]))
+        self.label_62.setText(str(arr[6][1]))
+        self.label_63.setText(str(arr[6][2]))
+        self.label_64.setText(str(arr[7][0]))
+        self.label_65.setText(str(arr[7][1]))
+        self.label_66.setText(str(arr[7][2]))
+        self.label_67.setText(str(arr[8][0]))
+        self.label_68.setText(str(arr[8][1]))
+        self.label_69.setText(str(arr[8][2]))
+
+        self.label_70.setText(str(arr[6][3]))
+        self.label_71.setText(str(arr[6][4]))
+        self.label_72.setText(str(arr[6][5]))
+        self.label_73.setText(str(arr[7][3]))
+        self.label_74.setText(str(arr[7][4]))
+        self.label_75.setText(str(arr[7][5]))
+        self.label_76.setText(str(arr[8][3]))
+        self.label_77.setText(str(arr[8][4]))
+        self.label_78.setText(str(arr[8][5]))
+
+        self.label_79.setText(str(arr[6][6]))
+        self.label_80.setText(str(arr[6][7]))
+        self.label_81.setText(str(arr[6][8]))
+        self.label_82.setText(str(arr[7][6]))
+        self.label_83.setText(str(arr[7][7]))
+        self.label_84.setText(str(arr[7][8]))
+        self.label_85.setText(str(arr[8][6]))
+        self.label_86.setText(str(arr[8][7]))
+        self.label_87.setText(str(arr[8][8]))
+
+        if printFlag:
+            for i in range(9):
+                for j in range(9):
+                    print(arr[i][j], end=' ')
+                print()
+
+    def checkInputFeasibility(self, arr):
+        for i in range(maxBlock):
+            for j in range(maxBlock):
+                if arr[i][j] != 0:
+                    flag = isInputFeasible(arr, i, j, arr[i][j])
+
+                    if not flag:
+                        return False
+        
+        return True
+
+    def controler(self):
+
+        arr = self.initialize()
+        flag = self.checkInputFeasibility(arr)
+
+        if flag:
+            self.label_35.setHidden(True)
+            self.label_35.setDisabled(True)
+            place(arr, 0, 0)
+            self.showOutput(arr)
+        else:
+            self.label_35.setStyleSheet('color: red')
+            self.label_35.setEnabled(True)
+            self.label_35.setHidden(False)
 
 if __name__ == "__main__":
+
     import sys
-    #from sudoku import *
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

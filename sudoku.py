@@ -38,7 +38,6 @@
 
             NOTE : All non-zero elements are treated as assigned and '0' elements are treated as unassigned"""
 
-from mainwindow import *
 
 def findUnassigned(arr, r, c):
 
@@ -48,7 +47,26 @@ def findUnassigned(arr, r, c):
                 return (True, i, j)
     
     return (False, r, c)
+
+def isInputFeasible(arr, r, c, num):
+
+    for i in range(maxBlock):
+        if (arr[r][i] == num and i != c) or (arr[i][c] == num and i != r):
+            return False
     
+    r1 = (r // 3) * 3  # sets the lower row index of a 3x3 sub matrix
+    c1 = (c // 3) * 3  # sets the lower column index of a 3x3 sub matrix
+    
+    for i in range(r1, r1 + 3):
+        for j in range(c1, c1 + 3):
+            if arr[i][j] == num:
+                if i == r and j == c:
+                    continue
+                
+                return False
+    
+    return True
+
 def isFeasible(arr, r, c, num):
 
     for i in range(maxBlock):
@@ -82,6 +100,7 @@ def place(arr, r, c):
     return False # Triggers Backtracking
 
 maxBlock = 9
+
 if __name__ == "__main__":
     def printSolution(arr):
     
@@ -99,7 +118,7 @@ if __name__ == "__main__":
 
         arr = [[0 for i in range(maxBlock)] for j in range(maxBlock)]
         print("Enter the given Nos. formatted as : position row,position column,no. n to be assigned\nEnter -1 in any to exit")
-	        while True: # Takes Input and assigns to the SUDOKU matrix for given numbers
+        while True: # Takes Input and assigns to the SUDOKU matrix for given numbers
             i, j, num = list(map(int, input('Enter Data : ', end = '').strip().split()))
             if num > maxBlock or i > maxBlock or j > maxBlock:
                 print('Input Out Of Range')
