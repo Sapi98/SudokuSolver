@@ -119,7 +119,7 @@ if __name__ == "__main__":
         arr = [[0 for i in range(maxBlock)] for j in range(maxBlock)]
         print("Enter the given Nos. formatted as : position row,position column,no. n to be assigned\nEnter -1 in any to exit")
         while True: # Takes Input and assigns to the SUDOKU matrix for given numbers
-            i, j, num = list(map(int, input('Enter Data : ', end = '').strip().split()))
+            i, j, num = list(map(int, input('Enter Data : ').strip().split()))
             if num > maxBlock or i > maxBlock or j > maxBlock:
                 print('Input Out Of Range')
                 continue
