@@ -47,7 +47,25 @@ def findUnassigned(arr, r, c):
                 return (True, i, j)
     
     return (False, r, c)
+
+def isInputFeasible(arr, r, c, num):
     
+    for i in range(maxBlock):
+        if (arr[r][i] == num and i != c) or (arr[i][c] == num and i != r):
+            return False
+    
+    r = (r // 3) * 3  # sets the lower row index of a 3x3 sub matrix
+    c = (c // 3) * 3  # sets the lower column index of a 3x3 sub matrix
+    
+    for i in range(r, r + 3):
+        for j in range(c, c + 3):
+            if arr[i][j] == num:
+                if i != r and j != c:
+                    continue
+                return False
+    
+    return True
+
 def isFeasible(arr, r, c, num):
 
     for i in range(maxBlock):
@@ -81,6 +99,7 @@ def place(arr, r, c):
     return False # Triggers Backtracking
 
 maxBlock = 9
+
 if __name__ == "__main__":
     def printSolution(arr):
     
