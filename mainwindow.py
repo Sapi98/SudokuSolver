@@ -2714,7 +2714,7 @@ class Ui_MainWindow(object):
         self.label_35.setDisabled(True)
         self.pushButton.clicked.connect(self.controler)
     
-    def initialize(self):
+    def initialize(self, printFlag=False):
         # Initializes the matrix with values of the combobox
         arr = [[0 for i in range(maxBlock)] for j in range(maxBlock)]
         
@@ -2808,14 +2808,15 @@ class Ui_MainWindow(object):
         arr[8][7] = int(self.comboBox_51.currentText())
         arr[8][8] = int(self.comboBox_47.currentText())
 
-        for i in range(9):
-            for j in range(9):
-                print(arr[i][j], end=' ')
-            print()
+        if printFlag:
+            for i in range(9):
+                for j in range(9):
+                    print(arr[i][j], end=' ')
+                print()
         
         return arr
 
-    def showOutput(self, arr):
+    def showOutput(self, arr, printFlag=False):
         self.label.setText(str(arr[0][0]))
         self.label_2.setText(str(arr[0][1]))
         self.label_3.setText(str(arr[0][2]))
@@ -2906,17 +2907,18 @@ class Ui_MainWindow(object):
         self.label_86.setText(str(arr[8][7]))
         self.label_87.setText(str(arr[8][8]))
 
-        for i in range(9):
-            for j in range(9):
-                print(arr[i][j], end=' ')
-            print()
+        if printFlag:
+            for i in range(9):
+                for j in range(9):
+                    print(arr[i][j], end=' ')
+                print()
 
     def checkInputFeasibility(self, arr):
         for i in range(maxBlock):
             for j in range(maxBlock):
                 if arr[i][j] != 0:
                     flag = isInputFeasible(arr, i, j, arr[i][j])
-                    print(flag)
+
                     if not flag:
                         return False
         
@@ -2926,7 +2928,7 @@ class Ui_MainWindow(object):
 
         arr = self.initialize()
         flag = self.checkInputFeasibility(arr)
-        print(flag)
+
         if flag:
             self.label_35.setHidden(True)
             self.label_35.setDisabled(True)
