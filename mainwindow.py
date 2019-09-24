@@ -12,6 +12,7 @@ from sudoku import maxBlock, place, findUnassigned, isFeasible, isInputFeasible
 class Ui_MainWindow(object):
 
     # Method that creates initializes all the GUI objects/elements
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(788, 476)
@@ -1906,6 +1907,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     # Method reinitializes the elements like ComboBoxes, PushButtons and Lables with values that will get vissible to the user
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Sudoku Solver"))
@@ -2810,6 +2812,7 @@ class Ui_MainWindow(object):
     
     # This method initializes a 2D array/list from the input from the ComboBoxes for processcing of the input data
     # printFlag -> A flag that is used to explicitly print the list(arr) to the console. Solely built for debuging purpose
+
     def initialize(self, printFlag=False):
         # Initializes the matrix with values of the combobox
         arr = [[0 for i in range(maxBlock)] for j in range(maxBlock)]
@@ -2915,6 +2918,7 @@ class Ui_MainWindow(object):
     # This method deals with updating the solution to the labels under the solution section
     # arr is the array/list consisting of the final solution of the Input Sudoku configuration
     # printFlag -> A flag that is used to explicitly print the list(arr) to the console. Solely built for debuging purpose
+
     def showOutput(self, arr, printFlag=False):
         self.label.setText(str(arr[0][0]))
         self.label_2.setText(str(arr[0][1]))
@@ -3013,6 +3017,7 @@ class Ui_MainWindow(object):
                 print()
 
     # This method checks whether the input entered by the user is violating the rules of Sudoku or not
+
     def checkInputFeasibility(self, arr):
         for i in range(maxBlock):
             for j in range(maxBlock):
@@ -3026,6 +3031,7 @@ class Ui_MainWindow(object):
 
     # This method deals with the fundamental control of the program flow.
     # This method is called and triggered every time the 'Solve' PushButton is pressed
+    
     def controler(self):
 
         arr = self.initialize()
