@@ -1,8 +1,8 @@
-"""*********************************************ALL ABOUT SUDOKU************************************************************
-* The popular Japanese puzzle game Sudoku is based on the logical placement of numbers. Sudoku is one of the most popular  *
-* puzzle games of all time. The goal of Sudoku is to fill a 9×9 grid with numbers so that each row, column and 3×3 section *
-* contain all of the digits between 1 and 9. As a logic puzzle, Sudoku is also an excellent brain game.                    *
-****************************************************************************************************************************
+"""*********************************************ALL ABOUT SUDOKU***********************************************************
+* The popular Japanese puzzle game Sudoku is based on the logical placement of numbers. Sudoku is one of the most popular *
+* puzzle games of all time. The goal of Sudoku is to fill a 9×9 grid with numbers so that each row, column and 3×3        *
+* section contain all of the digits between 1 and 9. As a logic puzzle, Sudoku is also an excellent brain game.           *
+***************************************************************************************************************************
 
 ***********************************************RULES FOR THE GAME**********************************************************
 * The goal of Sudoku is to fill in a 9×9 grid with digits so that each column, row, and 3×3 section contain the numbers   *
