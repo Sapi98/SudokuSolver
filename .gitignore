@@ -2,3 +2,6 @@ icon.png
 Sudoku_gui
 build-Sudoku_gui-Desktop_Qt_5_7_0_GCC_64bit-Debug
 __pycache__
+module1.py
+module2.py
+.vscode
